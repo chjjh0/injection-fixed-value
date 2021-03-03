@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { useCallback, useEffect, useState } from 'react'
+import ChildComp from './ChildComp'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [value, setValue] = useState(0)
+  const [option, setOption] = useState(null)
+
+  console.log(value)
+  const parentFunc = useCallback(() => {
+    console.log('value', value)
+    setValue((prev) => Number(prev) + 1)
+  }, [value])
+
+  useEffect(() => {
+    setOption({
+      func: parentFunc,
+    })
+    // setValue(1)
+  }, [])
+
+  return <>{option && <ChildComp option={option} />}</>
 }
 
-export default App;
+export default App
